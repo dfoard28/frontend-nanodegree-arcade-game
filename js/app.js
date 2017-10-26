@@ -1,8 +1,11 @@
+"use strict";
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x,y,speed) {
     //set enemy's inital location
+    this.x = x;
+    this.y = y;
     //set enemy's speed
-
+    this.speed = speed;
     // a helper to load images
     this.sprite = 'images/enemy-bug.png';
 };
@@ -22,10 +25,12 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 //Player Class
-var Player = function(){
+var Player = function(x,y){
     //set inital location
+    this.x = x;
+    this.y = y;
     //helper to load images
-    this.sprite = 'images/char-horn-girl.png';
+    this.sprite = 'images/char-boy.png';
 };
 
 //update method for player
@@ -35,6 +40,9 @@ Player.prototype.update = function(dt) {
     // all computers.
 };
 //TODO: create a handleInput method for player
+Player.prototype.handleInput = function() {
+
+};
 
 //render method for Player
 Player.prototype.render = function() {
@@ -42,12 +50,27 @@ Player.prototype.render = function() {
 };
 
 //TODO: create a reset method for player
+Player.prototype.reset = function(){
+
+};
 
 
-// Now instantiate your objects.
+// instantiate enemy objects.
+var enemyOne = new Enemy(300,50,5);
+var enemyTwo = new Enemy(100,150,6);
+var enemyThree = new Enemy(400,220,8);
+var enemyFour = new Enemy(220,300,10);
+var enemyFive = new Enemy(10,400,1);
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+var allEnemies = [];
+allEnemies.push(enemyOne);
+allEnemies.push(enemyTwo);
+allEnemies.push(enemyThree);
+allEnemies.push(enemyFour);
+allEnemies.push(enemyFive);
 
+// Place the player object in a variable called player
+var player = new Player(200,400);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
