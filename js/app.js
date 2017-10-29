@@ -18,10 +18,10 @@ Enemy.prototype.update = function(dt) {
         if(this.x > 505){
             this.x = 0 * dt;
         }
-    //TODO:handles collisions with the player
-    //modal will pop up to tell the player they have lost and will ask if they would like to play again.
-
 };
+
+//TODO:handles collisions with the player
+    //modal will pop up to tell the player they have lost and will ask if they would like to play again.
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -80,7 +80,8 @@ Player.prototype.render = function() {
 
 //TODO: create a reset method for player
 Player.prototype.reset = function() {   
-
+    set: this.x = 200;
+    set: this.y = 400;
 };
 
 
