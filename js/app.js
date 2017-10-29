@@ -19,7 +19,8 @@ Enemy.prototype.update = function(dt) {
             this.x = 0 * dt;
         }
     //TODO:handles collisions with the player
-    
+    //modal will pop up to tell the player they have lost and will ask if they would like to play again.
+
 };
 
 // Draw the enemy on the screen, required method for game
@@ -51,8 +52,10 @@ Player.prototype.update = function(dt) {
     } else if (this.x > 445 || this.y > 445){
         this.x = 200;
         this.y = 400;
+     //when the player.y hits zero (water) then need to call modal that will come up and then reset the game within
+    } else if (this.y < -5){
+        $('#dialog').dialog('open');
     }
-    //when the player.y hits zero (water) then need to call modal that will come up and then reset the game within.
 };
 
 //handleInput method for player. 
@@ -113,3 +116,27 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+//TODO: add a modal to tell player that they have won
+
+$( "#dialog" ).dialog({
+    autoOpen: false,
+    modal: true,
+    show: {effect: "blind", duration: 800 },
+    buttons: {
+        Yes: function () {
+            $(this).dialog('close');
+        }
+    }
+});
+//initalize when collisions are dealt with
+/*$( "#dialog2" ).dialog({
+    autoOpen: false,
+    modal: true,
+    show: {effect: "blind", duration: 800 },
+    buttons: {
+        Yes: function () {
+            $(this).dialog('close');
+        }
+    }
+});*/
