@@ -19,6 +19,7 @@ Enemy.prototype.update = function(dt) {
             this.x = 0 * dt;
         }
     //TODO:handles collisions with the player
+    
 };
 
 // Draw the enemy on the screen, required method for game
