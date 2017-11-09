@@ -6,6 +6,10 @@ var Enemy = function(x,y,speed) {
     this.y = y;
     //set the speed for the enemy
     this.speed = speed;
+    //set width for collision functionality
+    this.width = 50;
+    //set height for collision functionality
+    this.height = 50;
     // a helper to load images
     this.sprite = 'images/enemy-bug.png';
 };
@@ -20,9 +24,6 @@ Enemy.prototype.update = function(dt) {
         }
 };
 
-//TODO:handles collisions with the player
-    //modal will pop up to tell the player they have lost and will ask if they would like to play again.
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -35,9 +36,15 @@ var Player = function(x,y){
     this.y = y;
     //setting dt so that we are able to use it later in the player update
     this.dt = 1;
+    //set width for collision functionality
+    this.width = 50;
+    //set height for collision functionality
+    this.height = 50;
     //helper to load images
     this.sprite = 'images/char-horn-girl.png';
 };
+
+
 
 //update method for player
 Player.prototype.update = function(dt) {
@@ -46,14 +53,15 @@ Player.prototype.update = function(dt) {
     // all computers.
     //if player moves out of bounds then they will be place back to the start
     this.dt = dt;
-    if(this.x < 1){
+    if(this.x < 2){
         this.x = 200;
         this.y = 400;
-    } else if (this.x > 445 || this.y > 445){
+    } else if (this.x > 443 || this.y > 445){
         this.x = 200;
         this.y = 400;
-     //when the player.y hits zero (water) then need to call modal that will come up and then reset the game within
+     //when the player.y hits water then need to call modal that will come up and then reset the player to start.
     } else if (this.y < -5){
+        player.y = -5;
         $('#dialog').dialog('open');
     }
 };
@@ -78,8 +86,8 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-//TODO: create a reset method for player
-Player.prototype.reset = function() {   
+//reset method for player
+Player.prototype.reset = function() {  
     set: this.x = 200;
     set: this.y = 400;
 };
@@ -91,8 +99,10 @@ function rando () {
     randOne = randOne < 3 ? randOne + 3 : randOne;
     return randOne * 10;
 }
+
+
 // instantiate enemy objects.
-var enemyOne = new Enemy(300,50,rando());
+var enemyOne = new Enemy(200,50,rando());
 var enemyTwo = new Enemy(100,150,rando());
 var enemyThree = new Enemy(400,220,rando());
 var enemyFour = new Enemy(0,300,rando());
@@ -118,8 +128,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-//TODO: add a modal to tell player that they have won
-
+//modal to tell player that they have won when they hit the water.
 $( "#dialog" ).dialog({
     autoOpen: false,
     modal: true,
@@ -127,17 +136,37 @@ $( "#dialog" ).dialog({
     buttons: {
         Yes: function () {
             $(this).dialog('close');
+            player.reset();
         }
     }
 });
-//initalize when collisions are dealt with
-/*$( "#dialog2" ).dialog({
+//modal will pop up to tell the player they have lost and will ask if they would like to play again.
+$( "#dialog2" ).dialog({
     autoOpen: false,
     modal: true,
     show: {effect: "blind", duration: 800 },
     buttons: {
         Yes: function () {
             $(this).dialog('close');
+            player.reset();
         }
     }
-});*/
+});
+
+// Collision Detection using a forEach loop on the allEnemies array.
+function checkCollisions(){
+    allEnemies.forEach(function(enemy){
+        //standard rect on rect 2D collision formula
+        if (enemy.x < player.x + player.width &&
+            enemy.x + enemy.width > player.x &&
+            enemy.y < player.y + player.height &&
+            enemy.height + enemy.y > player.y) {
+                //open dialog to tell player they have lost
+             $('#dialog2').dialog('open');
+             player.reset();
+         }
+    })
+}
+
+
+
