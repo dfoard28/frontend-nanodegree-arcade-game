@@ -34,8 +34,6 @@ var Player = function(x,y){
     //set inital location
     this.x = x;
     this.y = y;
-    //setting dt so that we are able to use it later in the player update
-    this.dt = 1;
     //set width for collision functionality
     this.width = 50;
     //set height for collision functionality
@@ -47,12 +45,8 @@ var Player = function(x,y){
 
 
 //update method for player
-Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+Player.prototype.update = function() {
     //if player moves out of bounds then they will be place back to the start
-    this.dt = dt;
     if(this.x < 2){
         this.x = 200;
         this.y = 400;
@@ -61,7 +55,7 @@ Player.prototype.update = function(dt) {
         this.y = 400;
      //when the player.y hits water then need to call modal that will come up and then reset the player to start.
     } else if (this.y < -5){
-        player.y = -5;
+        this.y = -5;
         $('#dialog').dialog('open');
     }
 };
@@ -70,13 +64,13 @@ Player.prototype.update = function(dt) {
 Player.prototype.handleInput = function(keyCode) {
     //this how the player moves, using the keyCode event listener 
     if(keyCode === 'left') {
-        this.x = this.x - (1000 * this.dt);
+        this.x = this.x - 50;
     } else if (keyCode === 'down'){
-        this.y = this.y + (1000 * this.dt);
+        this.y = this.y + 50;
     } else if (keyCode === 'right'){
-        this.x = this.x + (1000 * this.dt);
+        this.x = this.x + 50;
     } else if (keyCode === 'up'){
-        this.y = this.y - (1000 * this.dt);
+        this.y = this.y - 50;
     }
 
 };
