@@ -28,7 +28,7 @@ This project includes the following:
 2. enemies are instantiated and pushed into an allEnemies array.(app.js file) (used a random function to have the enemies move at different speeds).
 3. Keys are assigned so that the player can move (app.js file)
 4. If player reaches the water without being hit by an enemy then player will win the game, they are congratulated with a modal and asked if they would like to play again. (app.js)
-5. collisiion detection is looked for in the function checkCollisions (this function is called in the engine.js file), player willl lose the game if any collision is detected.(app.js file).
+5. collisiion detection is looked for in the function checkCollisions, this is done by using the axis aligned bounding box algorithm found on MDN (https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection). (this function is called in the engine.js file), player willl lose the game if any collision is detected.(app.js file).
 6. game loop functionality is all handled within the engine.js file.
 7. image loading is all handled within the resources.js file.
 

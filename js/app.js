@@ -156,7 +156,7 @@ $( "#dialog2" ).dialog({
 // Collision Detection using a forEach loop on the allEnemies array.
 function checkCollisions(){
     allEnemies.forEach(function(enemy){
-        //standard rect on rect 2D collision formula
+        //used the axis aligned bounding box algorithm from MDN (https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection) 
         if (enemy.x < player.x + player.width &&
             enemy.x + enemy.width > player.x &&
             enemy.y < player.y + player.height &&
